@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="display">
+            <!-- Current Formula -->
+            <p id="current-formula" class="display-item">11+13+123+5550</p>
+            <!-- Current Value -->
+            <p id="current-value" class="display-item">5550</p>
+        </div>
+        <div class="button-grid">
+            <input id="clear-all" class="btn" type="button" value="AC" onclick="clearAll()">
+            <input id="clear-entry" class="btn" type="button" value="CE" onclick="clearEntry()">
+            <input id="plusMinus" class="btn" type="button" value="+/-" onclick="changeSign()">
+            <input id="multiply" class="btn btn-ops" type="button" value="x" onclick="inputOperand('x')">
+
+            <input id="seven" class="btn btn-num" type="button" value="7" onclick="inputValue(7)">
+            <input id="eight" class="btn btn-num" type="button" value="8" onclick="inputValue(8)">
+            <input id="nine" class="btn btn-num" type="button" value="9" onclick="inputValue(9)">
+            <input id="subtract" class="btn btn-ops" type="button" value="-" onclick="inputOperand('-')">
+
+            <input id="four" class="btn btn-num" type="button" value="4" onclick="inputValue(4)">
+            <input id="five" class="btn btn-num" type="button" value="5" onclick="inputValue(5)">
+            <input id="six" class="btn btn-num" type="button" value="6" onclick="inputValue(6)">
+            <input id="add" class="btn btn-ops" type="button" value="+" onclick="inputOperand('+')">
+
+            <input id="one" class="btn btn-num" type="button" value="1" onclick="inputValue(1)">
+            <input id="two" class="btn btn-num" type="button" value="2" onclick="inputValue(2)">
+            <input id="three" class="btn btn-num" type="button" value="3" onclick="inputValue(3)">
+            <input id="divide" class="btn btn-ops" type="button" value="/"onclick="inputOperand('/')">
+
+            <input id="zero" class="btn btn-num" type="button" value="0" onclick="inputValue(0)">
+            <input id="decimal" class="btn" type="button" value="." onclick="inputDecimal()">
+            <input id="equal" class="btn btn-ops" type="button" value="=" onclick="doComputation()">
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+
+</html>
