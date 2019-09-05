@@ -2,21 +2,23 @@
  * DEFINITIONS
  * These are like utility libraries
  */
-var reg = /[+|x|\-|/]$/;
+const reg = /[+|*|\-|/]$/;
+const regToken = /(\d+|\+|\-|\*|\/)$/;
 
 /**
  * SOURCE-OF-TRUTH
  * This is the state in Angular, React, Vue, etc
  */
 var currentFormula = '';
-// var currentValue = '';
+var isLastButtonPressedEqualSign = false;
 
 /**
  * DEPENDENT ON SOURCE-OF-TRUTH
  * Angular, React, Vue's built in way of rendering HTML
  */
-var displayFormula = document.querySelector('#current-formula');
-// var displayValue = document.querySelector('#current-value');
+var currentValue = ''; // superficial (rendering stuff on screen)
+const displayFormula = document.querySelector('#current-formula');
+const displayValue = document.querySelector('#current-value');
 
 
 // 123+567+
@@ -27,19 +29,23 @@ var displayFormula = document.querySelector('#current-formula');
 
 /* CREATE */
 const inputValue = (arg) => {
+    if(currentFormula == '0'){
+        currentFormula = '';
+    } 
     currentFormula = currentFormula + arg; // business-logic
-    displayFormula.innerHTML = currentFormula; // side-effect
-    console.log("arg", arg);
-    console.log("currentFormula", currentFormula);
+    renderView();
 }
 
 const inputOperand = (arg) => {
+    // if not +-x/ then run
     if(!currentFormula.match(reg)){
         currentFormula = currentFormula + arg; // business-logic
-        displayFormula.innerHTML = currentFormula; // side-effect
+        renderView();
+    } else {
+        // last char is a operand
+        currentFormula = currentFormula.slice(0,-1) + arg;
+        renderView();
     }
-    console.log("arg", arg);
-    console.log("currentFormula", currentFormula);
 }
 
 
@@ -50,20 +56,49 @@ const inputDecimal = () => {
 
 /* DELETE */
 const clearAll = () => {
-    console.log('clearAll');
+    currentFormula = '0';
+    renderView();
 }
 const clearEntry =() => {
-    console.log('clearEntry');
+    renderView();
 }
 
 /* UPDATE */
 const doComputation = () => {
-    console.log('doComputation');
+    isLastButtonPressedEqualSign = true;
+    renderView();
 }
 const changeSign = () => {
-    console.log('changeSign');
+    renderView();
 }
 
+/* RENDER VIEW */
+// don't change currentFormula here, just pull that information in
+const renderView = () => {
+    if(isLastButtonPressedEqualSign){
+        currentValue = eval(currentFormula);
+        isLastButtonPressedEqualSign = false;
+        displayFormula.innerHTML = currentFormula;
+        displayValue.innerHTML = currentValue;
+        
+        currentFormula = currentValue +'';
+    } else {
+        currentValue = regToken.exec(currentFormula)[0]; // else run this
+        displayFormula.innerHTML = currentFormula;
+        displayValue.innerHTML = currentValue;
+    }
+
+    
+    console.log("currentFormula", currentFormula);
+    console.log('CurrentValue', currentValue);
+    console.log('isLastButtonEqualSign',isLastButtonPressedEqualSign)
+
+}
+
+// var myString = "something format_abc";
+// var myRegexp = /(?:^|\s)format_(.*?)(?:\s|$)/g;
+// var match = myRegexp.exec(myString);
+// console.log(match[1]); // abc
 
 // displayFormula.innerHTML = displayFormula.innerHTML + arg;
 // document.querySelector('#current-formula').innerHTML = '123123';
