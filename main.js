@@ -3,7 +3,8 @@
  * These are like utility libraries
  */
 const reg = /[+|*|\-|/]$/;
-const regToken = /(\d+|\+|\-|\*|\/)$/;
+const regToken = /(\d+\.\d+|\d+\.|\d+|\+|\-|\*|\/)$/; 
+// match ending number token w/ decimals, and operator
 
 /**
  * SOURCE-OF-TRUTH
@@ -37,21 +38,24 @@ const inputValue = (arg) => {
 }
 
 const inputOperand = (arg) => {
-    // if not +-x/ then run
-    if(!currentFormula.match(reg)){
-        currentFormula = currentFormula + arg; // business-logic
-        renderView();
-    } else {
-        // last char is a operand
+    // if +-x/ then run
+    if(currentFormula.match(reg)){
         currentFormula = currentFormula.slice(0,-1) + arg;
-        renderView();
+    } else {
+        currentFormula = currentFormula + arg; // business-logic
     }
+    renderView();
 }
 
-
-
 const inputDecimal = () => {
-    console.log('decimal');
+    if(currentFormula.match(reg)){
+        currentFormula = currentFormula + '0'
+    }
+
+    if(currentFormula.substr(-1) !== "." && !currentValue.includes('.')){
+        currentFormula = currentFormula + '.';
+    }
+    renderView();
 }
 
 /* DELETE */
@@ -60,6 +64,11 @@ const clearAll = () => {
     renderView();
 }
 const clearEntry =() => {
+    if(currentFormula === currentValue){
+        currentFormula = '0'
+    } else {
+        currentFormula = currentFormula.slice(0,-currentValue.length);
+    }
     renderView();
 }
 
@@ -69,6 +78,13 @@ const doComputation = () => {
     renderView();
 }
 const changeSign = () => {
+    // If currentFormula and currentValue equal, change both signs
+    // Disallow multiple - in currentFormula
+    if(currentFormula[0] !== '-'){
+        currentFormula = '-' + currentFormula;
+    } else {
+        currentFormula = currentFormula.substring(1);
+    }
     renderView();
 }
 
@@ -76,14 +92,14 @@ const changeSign = () => {
 // don't change currentFormula here, just pull that information in
 const renderView = () => {
     if(isLastButtonPressedEqualSign){
-        currentValue = eval(currentFormula);
+        currentValue = eval(currentFormula) + '';
         isLastButtonPressedEqualSign = false;
         displayFormula.innerHTML = currentFormula;
         displayValue.innerHTML = currentValue;
-        
-        currentFormula = currentValue +'';
+
+        currentFormula = currentValue; // hard reset
     } else {
-        currentValue = regToken.exec(currentFormula)[0]; // else run this
+        currentValue = regToken.exec(currentFormula)[0];
         displayFormula.innerHTML = currentFormula;
         displayValue.innerHTML = currentValue;
     }
@@ -92,7 +108,6 @@ const renderView = () => {
     console.log("currentFormula", currentFormula);
     console.log('CurrentValue', currentValue);
     console.log('isLastButtonEqualSign',isLastButtonPressedEqualSign)
-
 }
 
 // var myString = "something format_abc";
