@@ -49,16 +49,10 @@ body {
     background-color: darkorange;
     color: white;
 }
-.btn-num {
-}
 
 #clear-entry,
 #clear-all {
     background-color: pink;
 }
 
-/* ::placeholder { 
-    color: white;
-    opacity: 1; 
-} */
 

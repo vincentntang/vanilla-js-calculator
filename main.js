@@ -1,39 +1,30 @@
 /**
- * DEFINITIONS
- * These are like utility libraries
+ * DEFINITIONS - These are like utility libraries
  */
-const reg = /[+|*|\-|/]$/;
-const regToken = /(\d+\.\d+|\d+\.|\d+|\+|\-|\*|\/)$/; 
-// match ending number token w/ decimals, and operator
+const reg = /[+|*|\-|/]$/; // check if last char in currentFormula is an operand
+const regToken = /(\d+\.\d+|\d+\.|\d+|\+|\-|\*|\/)$/; // matches last token in currentFormula
 
 /**
- * SOURCE-OF-TRUTH
- * This is the state in Angular, React, Vue, etc
+ * SOURCE-OF-TRUTH - This is the state in Angular, React, Vue, etc
  */
 var currentFormula = '';
 var isLastButtonPressedEqualSign = false;
 
 /**
- * DEPENDENT ON SOURCE-OF-TRUTH
- * Angular, React, Vue's built in way of rendering HTML
+ * DEPENDENT ON SOURCE-OF-TRUTH - Angular, React, Vue's built in way of rendering HTML
  */
 var currentValue = ''; // superficial (rendering stuff on screen)
 const displayFormula = document.querySelector('#current-formula');
 const displayValue = document.querySelector('#current-value');
 
-
-// 123+567+
-
 /**
- * FUNCTIONS
+ * MODELS - CREATE
  */
-
-/* CREATE */
 const inputValue = (arg) => {
     if(currentFormula == '0'){
         currentFormula = '';
     } 
-    currentFormula = currentFormula + arg; // business-logic
+    currentFormula = currentFormula + arg;
     renderView();
 }
 
@@ -42,7 +33,7 @@ const inputOperand = (arg) => {
     if(currentFormula.match(reg)){
         currentFormula = currentFormula.slice(0,-1) + arg;
     } else {
-        currentFormula = currentFormula + arg; // business-logic
+        currentFormula = currentFormula + arg;
     }
     renderView();
 }
@@ -58,7 +49,9 @@ const inputDecimal = () => {
     renderView();
 }
 
-/* DELETE */
+/**
+ * MODELS - DELETE
+ */
 const clearAll = () => {
     currentFormula = '0';
     renderView();
@@ -72,7 +65,9 @@ const clearEntry =() => {
     renderView();
 }
 
-/* UPDATE */
+/**
+ * MODELS - UPDATE
+ */
 const doComputation = () => {
     isLastButtonPressedEqualSign = true;
     renderView();
@@ -88,8 +83,10 @@ const changeSign = () => {
     renderView();
 }
 
-/* RENDER VIEW */
-// don't change currentFormula here, just pull that information in
+/**
+ * VIEWS - in an MVC
+ * currentFormula modifications are minimalized here, those are modified mostly in Model
+ */
 const renderView = () => {
     if(isLastButtonPressedEqualSign){
         currentValue = eval(currentFormula) + '';
@@ -103,19 +100,8 @@ const renderView = () => {
         displayFormula.innerHTML = currentFormula;
         displayValue.innerHTML = currentValue;
     }
-
     
     console.log("currentFormula", currentFormula);
     console.log('CurrentValue', currentValue);
     console.log('isLastButtonEqualSign',isLastButtonPressedEqualSign)
 }
-
-// var myString = "something format_abc";
-// var myRegexp = /(?:^|\s)format_(.*?)(?:\s|$)/g;
-// var match = myRegexp.exec(myString);
-// console.log(match[1]); // abc
-
-// displayFormula.innerHTML = displayFormula.innerHTML + arg;
-// document.querySelector('#current-formula').innerHTML = '123123';
-// document.querySelector('#current-value').innerHTML = '555';
-// document.querySelector()
