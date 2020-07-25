@@ -6,7 +6,7 @@ A simple way to write vanilla JS calculator using MVC design pattern (Model View
 - Controller is the callback functions in the `.HTML` file
 - View only renders the data in the `.JS` file
 
-Written in a way similar to how single page applications like React,Vue, Angular etc are written.
+Written in a way similar to how single page applications work (React,Vue, Angular etc)
 
 https://vincentntang.github.io/vanilla-js-calculator/
 
