@@ -4,7 +4,7 @@ A simple way to write vanilla JS calculator using MVC design pattern (Model View
 
 - Model is the "business logic" that handles calculations in the `.JS` file
 - Controller is the callback functions in the `.HTML` file
-- View only renders the data in the `.JS` file
+- View only renders the data to the HTML from the `.JS` file
 
 Written in a way similar to how single page applications work (React,Vue, Angular etc)
 
